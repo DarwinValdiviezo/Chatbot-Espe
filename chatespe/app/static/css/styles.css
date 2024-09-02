@@ -1,0 +1,316 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e6f7e6; /* Fondo verde claro */
+}
+
+.chat-container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #d0ecd0; /* Verde claro */
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    position: relative; /* Para manejar el posicionamiento de los botones */
+    transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+    width: 60px;
+}
+
+.sidebar h2 {
+    margin: 40px 0 20px; /* Ajustar el margen para el título */
+    color: #333;
+    text-align: center;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar.collapsed h2 {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#conversation-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px; /* Ajustado para dar más espacio */
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+#conversation-list li {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f9f0; /* Color de fondo para cada conversación */
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#conversation-list li:hover {
+    background-color: #d0ecd0;
+}
+
+#conversation-list button {
+    background-color: #45a049;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%;
+}
+
+#conversation-list button:hover {
+    background-color: #397b3c;
+    transform: scale(1.05);
+}
+
+.chat-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    overflow-y: auto; /* Para permitir el scroll en el chat */
+}
+
+.chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fdfdfd;
+    position: relative;
+    background-image: url('/static/utils/ESPE.png'); /* Asegúrate de que la ruta sea correcta */
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.input-area {
+    display: flex;
+    align-items: center;
+    background-color: #f0f9f0;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#user-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+#user-input:focus {
+    border-color: #4caf50;
+    outline: none;
+}
+
+#send-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#send-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo de los mensajes */
+    position: relative;
+    z-index: 1; /* Asegura que los mensajes estén sobre la imagen de fondo */
+}
+
+/* Asegurar que el scroll funcione correctamente */
+.chat-box {
+    height: calc(100% - 60px); /* Ajusta el tamaño del chat-box */
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.user-message {
+    background-color: #d0ecd0;
+    align-self: flex-start; /* Alinear mensajes del usuario a la izquierda */
+    text-align: left; /* Alinear texto a la izquierda */
+    animation: slideInFromLeft 0.3s ease-out;
+}
+
+.bot-message {
+    background-color: #e6f7e6;
+    align-self: flex-end; /* Alinear mensajes del bot a la derecha */
+    text-align: right; /* Alinear texto a la derecha */
+    animation: slideInFromRight 0.3s ease-out;
+}
+
+/* Animaciones para los mensajes */
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Botones de la barra lateral */
+#new-chat {
+    background-color: #45a049;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px; /* Espacio bajo el título de Conversaciones */
+}
+
+#clear-conversations {
+    background-color: #45a049;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#new-chat:hover, #clear-conversations:hover {
+    background-color: #397b3c;
+    transform: scale(1.05);
+}
+
+#new-chat:active, #clear-conversations:active {
+    background-color: #357a36;
+    transform: scale(1);
+}
+
+/* Botón para mostrar/ocultar sidebar */
+#toggle-sidebar {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+#toggle-sidebar:hover {
+    background-color: #397b3c;
+    transform: scale(1.1);
+}
+
+#toggle-sidebar.collapsed {
+    margin: 0;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+#chat-box {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+/* Colores y sombras para los mensajes */
+.message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    overflow: hidden; /* Para manejar texto largo dentro de los mensajes */
+}
+
+.user-message {
+    background-color: #d0ecd0;
+    align-self: flex-start;
+    text-align: left;
+    animation: slideInFromLeft 0.3s ease-out;
+    float: left;
+    clear: both; /* Asegura que no se sobrepongan los mensajes */
+}
+
+.bot-message {
+    background-color: #e6f7e6;
+    align-self: flex-end;
+    text-align: right;
+    animation: slideInFromRight 0.3s ease-out;
+    float: right;
+    clear: both; /* Asegura que no se sobrepongan los mensajes */
+}
+
+
+/* Ocultar contenido de la sidebar en modo colapsado */
+.sidebar.collapsed #conversation-list,
+.sidebar.collapsed #new-chat,
+.sidebar.collapsed #clear-conversations,
+.sidebar.collapsed h2 {
+    display: none;
+}
+
+.sidebar.collapsed #toggle-sidebar {
+    width: 100%;
+}
